@@ -1,0 +1,14 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title slot="start">eBird</ion-title>
+    <ion-icon name="person-circle-outline" size="large" slot="end"></ion-icon>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+  <section>
+    <h1>Sign into your account</h1>
+    <ion-button expand="block" (click)="signInWithGoogle()">Sign in with Google</ion-button>
+    <ion-label>Don't have an account?</ion-label><a routerLink="signup">Sign up</a>
+  </section>
+</ion-content>

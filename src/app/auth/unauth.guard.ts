@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { 
-  CanActivate, 
-  ActivatedRouteSnapshot, 
-  RouterStateSnapshot, 
+import {
+  CanActivate,
+  ActivatedRouteSnapshot,
+  RouterStateSnapshot,
   Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import Auth from '@aws-amplify/auth';
@@ -10,7 +10,8 @@ import Auth from '@aws-amplify/auth';
 @Injectable({
   providedIn: 'root'
 })
-export class UnauthGuard implements CanActivate {
+export class
+UnauthGuard implements CanActivate {
   constructor( private _router: Router ) { }
   canActivate(
     next: ActivatedRouteSnapshot,

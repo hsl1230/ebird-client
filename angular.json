@@ -1,22 +1,25 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
+  "defaultProject": "ebird-client",
   "newProjectRoot": "projects",
   "projects": {
     "ebird-client": {
-      "projectType": "application",
-      "schematics": {
-        "@schematics/angular:component": {
-          "style": "scss"
-        }
-      },
       "root": "",
       "sourceRoot": "src",
+      "projectType": "application",
       "prefix": "app",
+      "schematics": {},
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": [
+              "lodash",
+              "@aws-amplify/*",
+              "@aws-sdk/middleware-location-constraint",
+              "@aws-sdk/*"
+            ],
             "outputPath": "dist/ebird-client",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -26,11 +29,21 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
+              {
+                "glob": "**/*",
+                "input": "src/assets",
+                "output": "assets"
+              },
+              {
+                "glob": "**/*.svg",
+                "input": "node_modules/ionicons/dist/ionicons/svg",
+                "output": "./svg"
+              },
               "src/manifest.webmanifest"
             ],
             "styles": [
-              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
-              "src/styles.scss"
+              "src/theme/variables.scss",
+              "src/global.scss"
             ],
             "scripts": []
           },
@@ -64,6 +77,9 @@
               ],
               "serviceWorker": true,
               "ngswConfigPath": "ngsw-config.json"
+            },
+            "ci": {
+              "progress": false
             }
           }
         },
@@ -75,6 +91,9 @@
           "configurations": {
             "production": {
               "browserTarget": "ebird-client:build:production"
+            },
+            "ci": {
+              "progress": false
             }
           }
         },
@@ -85,13 +104,23 @@
           }
         },
         "test": {
-          "builder": "@angular-devkit/build-angular:karma",
+          "builder": "@angular-builders/jest:run",
           "options": {
-            "main": "src/test.ts",
-            "polyfills": "src/polyfills.ts",
+            "configPath": "./jest.config.js",
             "tsConfig": "tsconfig.spec.json",
-            "karmaConfig": "karma.conf.js",
+            "no-cache": true,
+            "verbose": true,
             "assets": [
+              {
+                "glob": "favicon.ico",
+                "input": "src/",
+                "output": "/"
+              },
+              {
+                "glob": "**/*",
+                "input": "src/assets",
+                "output": "/assets"
+              },
               "src/favicon.ico",
               "src/assets",
               "src/manifest.webmanifest"
@@ -125,11 +154,48 @@
           "configurations": {
             "production": {
               "devServerTarget": "ebird-client:serve:production"
+            },
+            "ci": {
+              "devServerTarget": "ebird-client:serve:ci"
+            }
+          }
+        },
+        "ionic-cordova-build": {
+          "builder": "@ionic/angular-toolkit:cordova-build",
+          "options": {
+            "browserTarget": "ebird-client:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "ebird-client:build:production"
+            }
+          }
+        },
+        "ionic-cordova-serve": {
+          "builder": "@ionic/angular-toolkit:cordova-serve",
+          "options": {
+            "cordovaBuildTarget": "ebird-client:ionic-cordova-build",
+            "devServerTarget": "ebird-client:serve"
+          },
+          "configurations": {
+            "production": {
+              "cordovaBuildTarget": "ebird-client:ionic-cordova-build:production",
+              "devServerTarget": "ebird-client:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "ebird-client"
+  "cli": {
+    "defaultCollection": "@ionic/angular-toolkit"
+  },
+  "schematics": {
+    "@ionic/angular-toolkit:component": {
+      "styleext": "scss"
+    },
+    "@ionic/angular-toolkit:page": {
+      "styleext": "scss"
+    }
+  }
 }

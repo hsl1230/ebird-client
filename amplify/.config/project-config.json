@@ -1,17 +1,15 @@
 {
-    "projectName": "eBird",
-    "version": "3.0",
-    "frontend": "javascript",
-    "javascript": {
-        "framework": "angular",
-        "config": {
-            "SourceDir": "src",
-            "DistributionDir": "dist/ebird-client",
-            "BuildCommand": "npm run build",
-            "StartCommand": "npm start"
-        }
-    },
-    "providers": [
-        "awscloudformation"
-    ]
+  "projectName": "eBird",
+  "version": "3.0",
+  "frontend": "javascript",
+  "javascript": {
+    "framework": "angular",
+    "config": {
+      "SourceDir": "src",
+      "DistributionDir": "dist/ebird-client",
+      "BuildCommand": "npm run build",
+      "StartCommand": "npm start"
+    }
+  },
+  "providers": ["awscloudformation"]
 }
